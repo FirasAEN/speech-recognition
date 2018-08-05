@@ -34,8 +34,10 @@ public class JdbcStudentRepository implements StudentRepository {
     }
 
     @Override
-    public Student getStudentById() {
-        return null;
+    public Student getStudentById(long id) {
+        Log.debug("Get student of id {}", id);
+        String query = "SELECT * FROM Student where id=?";
+        return jdbc.queryForObject(query, new StudentRowMapper(), id);
     }
 
     private final static class StudentRowMapper implements RowMapper<Student> {
