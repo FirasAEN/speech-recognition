@@ -27,4 +27,9 @@ public class StudentService {
         List<Student> allStudents = studentRepository.getAllStudents();
         return allStudents;
     }
+
+    public Student getById(long id){
+        Log.debug("Request to get student of id {}", id);
+        return studentRepository.getStudentById(id);
+    }
 }

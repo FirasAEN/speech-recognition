@@ -7,10 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -34,5 +31,16 @@ public class StudentResource {
         Log.debug("REST request to get all students");
         List<Student> students = studentService.getStudents();
         return ResponseEntity.ok(students);
+    }
+
+    @RequestMapping(
+            value = "/student/{studentId}",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public ResponseEntity<Student> getStudentById(@PathVariable(value = "studentId") long id){
+        Log.debug("REST request to get student of id: {}", id);
+        Student student = studentService.getById(id);
+        return ResponseEntity.ok(student);
     }
 }
