@@ -11,4 +11,6 @@ public interface CourseRepository {
     List<Course> getAllCourses();
 
     Course getCourseById(long id);
+
+    List<Course> getCoursesForStudent(long studentId);
 }
