@@ -1,5 +1,6 @@
 package com.capco.repositories;
 
+import com.capco.entities.Major;
 import com.capco.entities.Student;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,6 +41,18 @@ public class JdbcStudentRepository implements StudentRepository {
         return jdbc.queryForObject(query, new StudentRowMapper(), id);
     }
 
+    @Override
+    public Student getStudentWithMajor(long id) {
+        Log.debug("Get major of student of id {}", id);
+        String query = "SELECT stu.name as student_name, maj.name as major_name FROM Student as stu\n" +
+                "  INNER JOIN Major as maj\n" +
+                "    ON stu.major_id = maj.id\n" +
+                "WHERE stu.id = ?";
+        Student student = jdbc.queryForObject(query, new StudentWithMajorRowMapper(), id);
+        student.setId(id);
+        return student;
+    }
+
     private final static class StudentRowMapper implements RowMapper<Student> {
 
         @Override
@@ -47,6 +60,19 @@ public class JdbcStudentRepository implements StudentRepository {
             long id = Long.parseLong(resultSet.getString("id"));
             String name = resultSet.getString("name");
             return new Student(id, name);
+        }
+    }
+
+    private final static class StudentWithMajorRowMapper implements  RowMapper<Student> {
+        @Override
+        public Student mapRow(ResultSet resultSet, int i) throws SQLException {
+            String studentName = resultSet.getString("student_name");
+            String majorName = resultSet.getString("major_name");
+
+            Major major = new Major(majorName);
+            Student student = new Student(studentName);
+            student.setMajor(major);
+            return student;
         }
     }
 }
