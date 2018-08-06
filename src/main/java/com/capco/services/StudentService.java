@@ -1,6 +1,10 @@
 package com.capco.services;
 
+import com.capco.entities.Course;
+import com.capco.entities.Schedule;
 import com.capco.entities.Student;
+import com.capco.repositories.CourseRepository;
+import com.capco.repositories.ScheduleRepository;
 import com.capco.repositories.StudentRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,10 +20,16 @@ import java.util.List;
 public class StudentService {
     private final static Logger Log = LoggerFactory.getLogger(StudentService.class);
     private final StudentRepository studentRepository;
+    private final CourseRepository coursesRepository;
+    private final ScheduleRepository scheduleRepository;
 
     @Autowired
-    public StudentService(StudentRepository studentRepository){
+    public StudentService(StudentRepository studentRepository,
+                          CourseRepository courseRepository,
+                          ScheduleRepository scheduleRepository){
         this.studentRepository = studentRepository;
+        this.coursesRepository = courseRepository;
+        this.scheduleRepository = scheduleRepository;
     }
 
     public List<Student> getStudents(){
@@ -31,5 +41,16 @@ public class StudentService {
     public Student getById(long id){
         Log.debug("Request to get student of id {}", id);
         return studentRepository.getStudentById(id);
+    }
+
+    public Student getCoursesByStudentId(long studentId){
+        Log.debug("Request to get courses and schedules for student of studentId {}", studentId);
+        Student student = studentRepository.getStudentWithMajor(studentId);
+        List<Course> courses = coursesRepository.getCoursesForStudent(studentId);
+        courses.forEach(course -> {
+            course.setSchedules(scheduleRepository.getSchedules(course.getId()));
+        });
+        student.setCourses(courses);
+        return student;
     }
 }

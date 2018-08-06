@@ -43,4 +43,15 @@ public class StudentResource {
         Student student = studentService.getById(id);
         return ResponseEntity.ok(student);
     }
+
+    @RequestMapping(
+            value = "/student/{studentId}/courses",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public ResponseEntity<Student> getCourses(@PathVariable(value = "studentId") long id){
+        Log.debug("REST request to get courses for student of id: {}", id);
+        Student student = studentService.getCoursesByStudentId(id);
+        return ResponseEntity.ok(student);
+    }
 }
