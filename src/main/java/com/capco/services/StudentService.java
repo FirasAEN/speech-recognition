@@ -43,7 +43,7 @@ public class StudentService {
         return studentRepository.getStudentById(id);
     }
 
-    public Student getCoursesByStudentId(long studentId){
+    public Student getStudentWithCourses(long studentId){
         Log.debug("Request to get courses and schedules for student of studentId {}", studentId);
         Student student = studentRepository.getStudentWithMajor(studentId);
         List<Course> courses = coursesRepository.getCoursesForStudent(studentId);

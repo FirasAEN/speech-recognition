@@ -24,7 +24,7 @@ public class StudentServiceTest {
 
     @Test
     public void getCoursesByStudentId() throws Exception {
-        Student student = studentService.getCoursesByStudentId(1);
+        Student student = studentService.getStudentWithCourses(1);
         Log.debug(student.toString());
         assertEquals(student.getCourses().size(), 4);
     }
