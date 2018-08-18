@@ -1,5 +1,6 @@
 package com.capco.resources;
 
+import com.capco.dto.StudentDTO;
 import com.capco.entities.Student;
 import com.capco.services.StudentService;
 import org.slf4j.Logger;
@@ -32,13 +33,13 @@ public class StudentResource {
     }
 
     @RequestMapping(
-            value = "/student/{studentId}",
+            value = "/student/{studentId}/details",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<Student> getStudentById(@PathVariable(value = "studentId") long id){
-        Log.debug("REST request to get student of id: {}", id);
-        Student student = studentService.getById(id);
+    public ResponseEntity<Student> getStudentInfoById(@PathVariable(value = "studentId") long id){
+        Log.debug("REST request to get student details of id: {}", id);
+        Student student = studentService.getStudentInfoById(id);
         return ResponseEntity.ok(student);
     }
 

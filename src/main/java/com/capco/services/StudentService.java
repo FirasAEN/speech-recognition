@@ -38,14 +38,14 @@ public class StudentService {
         return new StudentDTO(studentRepository.getStudentById(id));
     }
 
-    public Student getById(long id){
+    public Student getStudentInfoById(long id){
         Log.debug("Request to get student of id {}", id);
-        return studentRepository.getStudentById(id);
+        return studentRepository.getStudentDetails(id);
     }
 
     public Student getStudentWithCourses(long studentId){
         Log.debug("Request to get courses and schedules for student of studentId {}", studentId);
-        Student student = studentRepository.getStudentWithMajor(studentId);
+        Student student = studentRepository.getStudentDetails(studentId);
         List<Course> courses = coursesRepository.getCoursesForStudent(studentId);
         courses.forEach(course -> {
             course.setSchedules(scheduleRepository.getSchedules(course.getId()));

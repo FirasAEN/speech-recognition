@@ -42,13 +42,13 @@ public class JdbcStudentRepository implements StudentRepository {
     }
 
     @Override
-    public Student getStudentWithMajor(long id) {
-        Log.debug("Get major of student of id {}", id);
+    public Student getStudentDetails(long id) {
+        Log.debug("Get details of student of id {}", id);
         String query = "SELECT stu.first_name, stu.last_name, stu.registration_year as year, stu.average_gpa as gpa, maj.name as major_name FROM Student as stu\n" +
                         "INNER JOIN Major as maj\n" +
                         "ON stu.major_id = maj.id\n" +
                         "WHERE stu.id = ?";
-        Student student = jdbc.queryForObject(query, new StudentWithMajorRowMapper(), id);
+        Student student = jdbc.queryForObject(query, new StudentDetailsRowMapper(), id);
         student.setId(id);
         return student;
     }
@@ -64,7 +64,7 @@ public class JdbcStudentRepository implements StudentRepository {
         }
     }
 
-    private final static class StudentWithMajorRowMapper implements  RowMapper<Student> {
+    private final static class StudentDetailsRowMapper implements  RowMapper<Student> {
         @Override
         public Student mapRow(ResultSet resultSet, int i) throws SQLException {
             String firstName = resultSet.getString("first_name");

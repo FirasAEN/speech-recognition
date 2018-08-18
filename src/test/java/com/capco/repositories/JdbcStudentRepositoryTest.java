@@ -21,7 +21,7 @@ public class JdbcStudentRepositoryTest {
 
     @Test
     public void getStudentWithMajor() throws Exception {
-        Student student = repo.getStudentWithMajor(1);
+        Student student = repo.getStudentDetails(1);
         assertEquals(student.getId(), 1);
     }
 

@@ -12,5 +12,5 @@ public interface StudentRepository {
 
     Student getStudentById(long id);
 
-    Student getStudentWithMajor(long id);
+    Student getStudentDetails(long id);
 }
