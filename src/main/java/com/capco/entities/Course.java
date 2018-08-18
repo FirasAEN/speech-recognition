@@ -11,16 +11,17 @@ import java.util.List;
 public class Course {
     @JsonIgnore
     private long id;
-    private String name;
+    private String courseName;
+    private String teacherName;
     private List<Schedule> schedules = new ArrayList<>();
 
-    public Course(long id, String name) {
+    public Course(long id, String courseName) {
         this.id = id;
-        this.name = name;
+        this.courseName = courseName;
     }
 
-    public Course(String name){
-        this(-1, name);
+    public Course(String courseName){
+        this(0, courseName);
     }
 
     public long getId() {
@@ -31,12 +32,20 @@ public class Course {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getCourseName() {
+        return courseName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
+    }
+
+    public String getTeacherName() {
+        return teacherName;
+    }
+
+    public void setTeacherName(String teacherName) {
+        this.teacherName = teacherName;
     }
 
     public List<Schedule> getSchedules() {
@@ -55,7 +64,8 @@ public class Course {
     public String toString() {
         return "Course{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", courseName='" + courseName + '\'' +
+                ", teacherName='" + teacherName + '\'' +
                 ", schedules=" + schedules +
                 '}';
     }

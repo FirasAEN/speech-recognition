@@ -49,9 +49,9 @@ public class StudentResource {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<Student> getCourses(@PathVariable(value = "studentId") long id){
+    public ResponseEntity<Student> getStudentWithCourses(@PathVariable(value = "studentId") long id){
         Log.debug("REST request to get courses for student of id: {}", id);
-        Student student = studentService.getCoursesByStudentId(id);
+        Student student = studentService.getStudentWithCourses(id);
         return ResponseEntity.ok(student);
     }
 }

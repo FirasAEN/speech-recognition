@@ -8,17 +8,21 @@ import java.util.List;
  */
 public class Student {
     private long id;
-    private String name;
+    private String firstName;
+    private String lastName;
+    private long registrationYear;
+    private float averageGPA;
     private Major major;
     private List<Course> courses = new ArrayList<>();
 
-    public Student(long id, String name){
+    public Student(long id, String firstName, String lastName){
         this.id = id;
-        this.name = name;
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
-    public Student(String name){
-        this(-1, name);
+    public Student(String firstName, String lastName){
+        this(0, firstName, lastName);
     }
 
     public Student(){}
@@ -31,12 +35,36 @@ public class Student {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public long getRegistrationYear() {
+        return registrationYear;
+    }
+
+    public void setRegistrationYear(long registrationYear) {
+        this.registrationYear = registrationYear;
+    }
+
+    public float getAverageGPA() {
+        return averageGPA;
+    }
+
+    public void setAverageGPA(float averageGPA) {
+        this.averageGPA = averageGPA;
     }
 
     public Major getMajor() {
@@ -63,7 +91,10 @@ public class Student {
     public String toString() {
         return "Student{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", registrationYear=" + registrationYear +
+                ", averageGPA=" + averageGPA +
                 ", major=" + major +
                 ", courses=" + courses +
                 '}';
