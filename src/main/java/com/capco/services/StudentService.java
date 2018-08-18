@@ -1,7 +1,7 @@
 package com.capco.services;
 
+import com.capco.dto.StudentDTO;
 import com.capco.entities.Course;
-import com.capco.entities.Schedule;
 import com.capco.entities.Student;
 import com.capco.repositories.CourseRepository;
 import com.capco.repositories.ScheduleRepository;
@@ -32,10 +32,10 @@ public class StudentService {
         this.scheduleRepository = scheduleRepository;
     }
 
-    public List<Student> getStudents(){
-        Log.debug("Request to get all students");
-        List<Student> allStudents = studentRepository.getAllStudents();
-        return allStudents;
+
+    public StudentDTO getStudentDTOById(long id){
+        Log.debug("Request to get student of id {}", id);
+        return new StudentDTO(studentRepository.getStudentById(id));
     }
 
     public Student getById(long id){
