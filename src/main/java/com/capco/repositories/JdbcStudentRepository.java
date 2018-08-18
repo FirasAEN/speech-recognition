@@ -44,10 +44,10 @@ public class JdbcStudentRepository implements StudentRepository {
     @Override
     public Student getStudentWithMajor(long id) {
         Log.debug("Get major of student of id {}", id);
-        String query = "SELECT stu.name as student_name, maj.name as major_name FROM Student as stu\n" +
-                "  INNER JOIN Major as maj\n" +
-                "    ON stu.major_id = maj.id\n" +
-                "WHERE stu.id = ?";
+        String query = "SELECT stu.first_name, stu.last_name, stu.registration_year as year, stu.average_gpa as gpa, maj.name as major_name FROM Student as stu\n" +
+                        "INNER JOIN Major as maj\n" +
+                        "ON stu.major_id = maj.id\n" +
+                        "WHERE stu.id = ?";
         Student student = jdbc.queryForObject(query, new StudentWithMajorRowMapper(), id);
         student.setId(id);
         return student;
@@ -58,20 +58,26 @@ public class JdbcStudentRepository implements StudentRepository {
         @Override
         public Student mapRow(ResultSet resultSet, int i) throws SQLException {
             long id = Long.parseLong(resultSet.getString("id"));
-            String name = resultSet.getString("name");
-            return new Student(id, name);
+            String firstName = resultSet.getString("first_name");
+            String lastName = resultSet.getString("last_name");
+            return new Student(id, firstName, lastName);
         }
     }
 
     private final static class StudentWithMajorRowMapper implements  RowMapper<Student> {
         @Override
         public Student mapRow(ResultSet resultSet, int i) throws SQLException {
-            String studentName = resultSet.getString("student_name");
+            String firstName = resultSet.getString("first_name");
+            String lastName = resultSet.getString("last_name");
+            long year = resultSet.getLong("year");
+            float gpa = resultSet.getFloat("gpa");
             String majorName = resultSet.getString("major_name");
 
             Major major = new Major(majorName);
-            Student student = new Student(studentName);
+            Student student = new Student(firstName, lastName);
             student.setMajor(major);
+            student.setRegistrationYear(year);
+            student.setAverageGPA(gpa);
             return student;
         }
     }
