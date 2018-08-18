@@ -41,7 +41,7 @@ public class JdbcCourseRepository implements CourseRepository {
     @Override
     public List<Course> getCoursesForStudent(long studentId) {
         Log.debug("Get courses enrolled in by student of id {}", studentId);
-        String query = "SELECT stu.name as student_name, cou.course, cou.id as course_id\n" +
+        String query = "SELECT stu.first_name as first_name, stu.last_name as last_name, cou.course_name, cou.id as course_id, cou.teacher_name as teacher\n" +
                 "from Student as stu\n" +
                 "  INNER JOIN Course as cou\n" +
                 "  INNER JOIN Student_Course\n" +
@@ -64,8 +64,11 @@ public class JdbcCourseRepository implements CourseRepository {
         @Override
         public Course mapRow(ResultSet resultSet, int i) throws SQLException {
             Long id = Long.valueOf(resultSet.getString("course_id"));
-            String courseName = resultSet.getString("course");
-            return new Course(id, courseName);
+            String courseName = resultSet.getString("course_name");
+            String teacher = resultSet.getString("teacher");
+            Course course = new Course(id, courseName);
+            course.setTeacherName(teacher);
+            return course;
         }
     }
 }
