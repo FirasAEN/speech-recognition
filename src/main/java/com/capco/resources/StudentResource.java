@@ -1,5 +1,6 @@
 package com.capco.resources;
 
+import com.capco.dto.StudentDTO;
 import com.capco.entities.Student;
 import com.capco.services.StudentService;
 import org.slf4j.Logger;
@@ -8,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * Created by Firas on 7/28/2018.
@@ -23,24 +22,24 @@ public class StudentResource {
     private StudentService studentService;
 
     @RequestMapping(
-            value = "/students/all",
-            method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE
-    )
-    public ResponseEntity<List<Student>> getAllStudents(){
-        Log.debug("REST request to get all students");
-        List<Student> students = studentService.getStudents();
-        return ResponseEntity.ok(students);
-    }
-
-    @RequestMapping(
             value = "/student/{studentId}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<Student> getStudentById(@PathVariable(value = "studentId") long id){
+    public ResponseEntity<StudentDTO> getStudentDTOById(@PathVariable(value = "studentId") long id){
         Log.debug("REST request to get student of id: {}", id);
-        Student student = studentService.getById(id);
+        StudentDTO student = studentService.getStudentDTOById(id);
+        return ResponseEntity.ok(student);
+    }
+
+    @RequestMapping(
+            value = "/student/{studentId}/details",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public ResponseEntity<Student> getStudentInfoById(@PathVariable(value = "studentId") long id){
+        Log.debug("REST request to get student details of id: {}", id);
+        Student student = studentService.getStudentInfoById(id);
         return ResponseEntity.ok(student);
     }
 
