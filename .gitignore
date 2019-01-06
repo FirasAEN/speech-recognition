@@ -25,3 +25,8 @@
 /.nb-gradle/
 
 ## App related
+
+## Web App related
+/src/main/webapp
+/diagrams
+/speechApp.eap
